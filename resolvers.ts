@@ -37,16 +37,16 @@ export const resolvers = {
     User: {
         id : (parent: User) => parent._id?.toString(),
         posts: async (parent: User,_:unknown, context: Context)=>{
-            const result =await context.postCollection.findOne({_id: {$in: parent.posts}})
+            const result =await context.postCollection.find({_id: {$in: parent.posts}}).toArray()
             return result
         },
         comments: async (parent: User,_:unknown, context: Context)=>{
-            const result:Comment|null =await context.commentCollection.findOne({_id: {$in: parent.comments}})
+            const result =await context.commentCollection.find({_id: {$in: parent.comments}}).toArray()
             return result
             
         },
         likedPosts: async (parent: User,_:unknown, context: Context)=>{
-            const result =await context.postCollection.findOne({_id: {$in: parent.likedPosts}})
+            const result =await context.postCollection.find({_id: {$in: parent.likedPosts}}).toArray()
             return result
         },
     },
